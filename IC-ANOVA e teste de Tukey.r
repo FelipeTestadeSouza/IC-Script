@@ -1,4 +1,5 @@
 usethis::create_project("D:/Google/UTFPR/IC/IC-Script") #Código - criar projeto
+usethis::use_readme_md()
 
 ###===###===###===###===###===###===###===###===###===###=== 
 #Pacotes  
