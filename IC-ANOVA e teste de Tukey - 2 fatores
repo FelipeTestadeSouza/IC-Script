@@ -1,0 +1,34 @@
+#Pacotes  
+library(readxl)  
+library(ExpDes.pt) 
+
+#Importação de dados: 
+dados <- read_xlsx("nome_arquivo_ou_caminho_até_o_arquivo.xlsx") 
+dados 
+
+###===###===###===###===###===###===###===###===###===###=== 
+###         ANOVA e Teste de Tukey - DOIS FATORES        ### 
+###===###===###===###===###===###===###===###===###===###=== 
+#ANOVA e teste de Tukey: 
+#O primeiro argumento é o fator 1
+#O segundo argumento é o fator 2  
+#O terceiro argumento é a variável resposta 
+fat2.dic(dados$fator_1, dados$fator_2, dados$variavel_resposta)
+
+#Teste de Bartlett:
+#O primeiro argumento é a variável resposta
+#A função "interaction()" serve para considerar os dois fatores trabalhados   
+#O segundo argumento é o conjunto de dados analisados  
+bartlett.test(dados$variavel_resposta ~ interaction(dados$fator_1, dados$fator_2),
+              data = dados
+)
+
+#Teste de Shapiro-Wilk:
+#As primeiras duas funções ("aov()" e "residuals()") servem para obter os resíduos do conjunto de dados utilizado 
+#Na função "aov", o primeiro argumento é a variável resposta junto com os dois fatores estudados e o segundo argumento é o conjunto de dados
+#Caso aconteça algum problema relacionado aos fatores na função "aov()", utilize a seguinte função "as.factor(fator_1) * as.factor(fator_2)" no lugar de "fator_1 * fator_2" 
+experimento_fatorial <- aov(variavel_resposta ~ fator_1 * fator_2, data = dados)
+residuos <- residuals(experimento_fatorial)
+shapiro.test(residuos)
+
+###===###===###===###===###===###===###===###===###===###FIM!
